@@ -1,0 +1,6 @@
+swc/config.json
+{
+    "default_solver": "FixedStepDiscrete",
+    "default_inport_name": "In",
+    "default_outport_name": "Out"
+}
