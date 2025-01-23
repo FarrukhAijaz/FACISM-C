@@ -23,4 +23,4 @@ missing module named _frozen_importlib_external - imported by importlib._bootstr
 excluded module named _frozen_importlib - imported by importlib (optional), importlib.abc (optional)
 missing module named _winapi - imported by encodings (delayed, conditional, optional), ntpath (optional), subprocess (optional)
 missing module named msvcrt - imported by subprocess (optional)
-missing module named gui - imported by /home/saijaz/Desktop/FACISM-C/main.py (top-level)
+missing module named gui - imported by /home/saijaz/Desktop/FACISM-C/FACISM-C/main.py (top-level)

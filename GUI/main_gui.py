@@ -1,8 +1,8 @@
 # gui/main_gui.py
 import tkinter as tk
 from tkinter import messagebox
-from swc.swc_creator import create_new_swc
-from gui.validation import validate_inputs
+from SWC.swc_creator import create_new_swc
+from GUI.validation import validate_inputs
 
 def generate_swc():
     swc_name = entry_swc_name.get()

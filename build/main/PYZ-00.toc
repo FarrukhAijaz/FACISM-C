@@ -1,4 +1,4 @@
-('/home/saijaz/Desktop/FACISM-C/build/main/PYZ-00.pyz',
+('/home/saijaz/Desktop/FACISM-C/FACISM-C/build/main/PYZ-00.pyz',
  [('_compat_pickle', '/usr/lib/python3.10/_compat_pickle.py', 'PYMODULE'),
   ('_compression', '/usr/lib/python3.10/_compression.py', 'PYMODULE'),
   ('_py_abc', '/usr/lib/python3.10/_py_abc.py', 'PYMODULE'),
