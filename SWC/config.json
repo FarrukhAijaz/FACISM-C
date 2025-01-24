@@ -1,6 +1,12 @@
-swc/config.json
+
 {
-    "default_solver": "FixedStepDiscrete",
-    "default_inport_name": "In",
-    "default_outport_name": "Out"
+    "__comment": "This file contains pre-defined settings for SWC creation.",
+    "solver": "FixedStepDiscrete",
+    "sample_time": 0.1,
+    "start_time": 0.0,
+    "stop_time": 10.0,
+    "other_parameters": {
+        "max_step_size": 0.2,
+        "solver_mode": "Auto"
+    }
 }
