@@ -1,5 +1,5 @@
 import os
-import matlab.engine
+import matlab.engine    
 
 def create_autosar_structure(swc_name, num_subcomponents, num_units, use_predefined_settings, base_directory):
     # Start MATLAB engine
@@ -18,13 +18,11 @@ def create_autosar_structure(swc_name, num_subcomponents, num_units, use_predefi
     eng.new_system(swc_name, nargout=0)
     eng.save_system(swc_name, swc_slx, nargout=0)
     
-    # Create Subcomponents folder
-    subcomponents_dir = os.path.join(swc_dir, "subcomponents")
-    os.makedirs(subcomponents_dir, exist_ok=True)
+
     
     for i in range(1, num_subcomponents + 1):
         subcomponent_name = f"subcomponent_{i}"
-        subcomponent_dir = os.path.join(subcomponents_dir, subcomponent_name)
+        subcomponent_dir = os.path.join(swc_dir, subcomponent_name)
         os.makedirs(subcomponent_dir, exist_ok=True)
         
         # Create Subcomponent .slx file
@@ -32,13 +30,9 @@ def create_autosar_structure(swc_name, num_subcomponents, num_units, use_predefi
         eng.new_system(subcomponent_name, nargout=0)
         eng.save_system(subcomponent_name, subcomponent_slx, nargout=0)
         
-        # Create Units folder
-        units_dir = os.path.join(subcomponent_dir, "units")
-        os.makedirs(units_dir, exist_ok=True)
-        
         for j in range(1, num_units + 1):
-            unit_name = f"unit_{j}"
-            unit_dir = os.path.join(units_dir, unit_name)
+            unit_name = f"sc_{i}_unit_{j}"
+            unit_dir = os.path.join(subcomponent_dir, unit_name)
             os.makedirs(unit_dir, exist_ok=True)
             
             # Create Unit .slx file
