@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, ttk, filedialog
+from SWC.swc_creator import create_autosar_structure  # Import the SWC creation function
 
 def browse_directory():
     """Open a file explorer to select a directory."""
@@ -28,7 +29,7 @@ def toggle_manual_inputs():
         entry_coder_format.grid(row=7, column=1, padx=10, pady=5)
 
 def create_swc():
-    """Validate inputs, collect data, and create the SWC."""
+    """Validate inputs, collect data, and pass them to the SWC creation function."""
     swc_name = entry_swc_name.get()
     directory = entry_directory.get()
     use_predefined = predefined_settings_var.get()  # Get the state of the checkbox
@@ -39,6 +40,10 @@ def create_swc():
     if not directory:
         messagebox.showerror("Validation Error", "Please select a valid directory.")
         return
+
+    # Get the number of subcomponents and units
+    num_subcomponents = int(combo_subcomponents.get())
+    num_units = int(combo_units.get())
 
     # Collect data based on the checkbox state
     if use_predefined:
@@ -69,7 +74,13 @@ def create_swc():
 
     # Debugging: Print collected data (replace with actual SWC creation logic)
     print(f"Collected Data: {swc_data}")
-    messagebox.showinfo("Success", f"SWC '{swc_name}' created successfully!")
+    
+    # Pass the data to the SWC creation function
+    try:
+        create_autosar_structure(swc_name, num_subcomponents, num_units, use_predefined, directory)
+        messagebox.showinfo("Success", f"SWC '{swc_name}' created successfully!")
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while creating the SWC: {str(e)}")
 
 def launch_gui():
     """Launch the GUI."""
@@ -127,7 +138,5 @@ def launch_gui():
     toggle_manual_inputs()  # Ensure fields are shown/hidden based on default state
     root.mainloop()
 
-
-# Entry point for testing
 if __name__ == "__main__":
     launch_gui()
