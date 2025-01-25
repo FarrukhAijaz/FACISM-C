@@ -7,7 +7,7 @@ def create_autosar_structure(swc_name, num_subcomponents, num_units, use_predefi
     
     # Define the base directory (Downloads in Ubuntu)
     if base_directory is None:
-        base_directory = os.path.expanduser('~/Downloads')
+        base_directory = os.path.expanduser('~/Desktop')
     
     # Create SWC directory
     swc_dir = os.path.join(base_directory, swc_name)
