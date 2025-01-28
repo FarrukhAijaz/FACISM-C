@@ -2,7 +2,7 @@ import os
 import matlab.engine    
 from SWC.simulink_helper import create_subcomponent_model
 
-def create_autosar_structure(swc_name, num_subcomponents, num_units, use_predefined_settings, base_directory):
+def create_autosar_structure(swc_name, num_subcomponents, num_units, base_directory):
     # Start MATLAB engine
     eng = matlab.engine.start_matlab()
     
@@ -30,10 +30,10 @@ def create_autosar_structure(swc_name, num_subcomponents, num_units, use_predefi
     print(f"Successfully created AUTOSAR structure for {swc_name} at {swc_dir}")
 
 # Example usage with default values
-swc_name = "SWC_Example"
-num_subcomponents = 2
-num_units = 3
-use_predefined_settings = True  # Placeholder for predefined settings logic
-base_directory = None  # Will default to the Desktop folder in Ubuntu
+# swc_name = "SWC_Example"
+# num_subcomponents = 2
+# num_units = 3
+# use_predefined_settings = True  # Placeholder for predefined settings logic
+# base_directory = None  # Will default to the Desktop folder in Ubuntu
 
-create_autosar_structure(swc_name, num_subcomponents, num_units, use_predefined_settings, base_directory)
+# create_autosar_structure(swc_name, num_subcomponents, num_units, base_directory)
