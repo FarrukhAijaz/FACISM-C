@@ -136,7 +136,3 @@ def launch_gui():
 
     toggle_manual_inputs()  # Ensure fields are shown/hidden based on default state
     root.mainloop()
-
-
-if __name__ == "__main__":
-    launch_gui()
