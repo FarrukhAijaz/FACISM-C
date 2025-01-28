@@ -19,7 +19,7 @@ def create_unit_model(i, subcomponent_dir, subcomponent_name, num_units, eng):
             eng.add_block('simulink/Sinks/Out1', f"{unit_name}/Out1", nargout=0)
 
             # Set Gain value (can be customized or parameterized)
-            eng.set_param(f"{unit_name}/Gain", 'Gain', '5'+ j, nargout=0)
+            eng.set_param(f"{unit_name}/Gain", 'Gain', '5', nargout=0)
 
             # Position blocks for better visual layout
             eng.set_param(f"{unit_name}/In1", 'Position', '[100, 100, 130, 130]', nargout=0)
@@ -34,13 +34,7 @@ def create_unit_model(i, subcomponent_dir, subcomponent_name, num_units, eng):
             eng.save_system(unit_name, unit_slx, nargout=0)
 
             # Add a Model Reference block in the subcomponent and reference the unit model
-            model_ref_block_name = f"{subcomponent_name}/ModelReference_{unit_name}"
-            eng.add_block('simulink/Ports & Subsystems/Model', model_ref_block_name, nargout=0)
-            eng.set_param(model_ref_block_name, 'ModelName', unit_name, nargout=0)
-            
-            # Position the Model Reference block
-            block_position_x = 100 + (j * 150)
-            eng.set_param(model_ref_block_name, 'Position', f"[{block_position_x}, 100, {block_position_x + 50}, 130]", nargout=0)
+            add_model_reference(j, eng, subcomponent_name, unit_name)
            
 
 def create_subcomponent_model(swc_name, swc_dir, num_subcomponents, num_units, eng):
@@ -60,17 +54,13 @@ def create_subcomponent_model(swc_name, swc_dir, num_subcomponents, num_units, e
         eng.save_system(subcomponent_name, subcomponent_slx, nargout=0)
         
         # Add a Model Reference block in the SWC and reference the subcomponent model
-        model_ref_block_name_swc = f"{swc_name}/ModelReference_{subcomponent_name}"
-        eng.add_block('simulink/Ports & Subsystems/Model', model_ref_block_name_swc, nargout=0)
-        eng.set_param(model_ref_block_name_swc, 'ModelName', subcomponent_name, nargout=0)
-        
-        # Position the Model Reference block
-        block_position_x_swc = 100 + (i * 200)
-        eng.set_param(model_ref_block_name_swc, 'Position', f"[{block_position_x_swc}, 100, {block_position_x_swc + 50}, 130]", nargout=0)
+        add_model_reference(i, eng, swc_name, subcomponent_name)
 
-def add_model_reference(eng, parent_name, model_name, ref_name, position):
-    """Add a Model Reference block to the parent model."""
-    model_ref_block_name = f"{parent_name}/{ref_name}"
-    eng.add_block('simulink/Ports & Subsystems/Model', model_ref_block_name, nargout=0)
-    eng.set_param(model_ref_block_name, 'ModelName', model_name, nargout=0)
-    eng.set_param(model_ref_block_name, 'Position', position, nargout=0)
+def add_model_reference(i, eng, parent_name, child_name):
+    model_ref_block_name_swc = f"{parent_name}/ModelReference_{child_name}"
+    eng.add_block('simulink/Ports & Subsystems/Model', model_ref_block_name_swc, nargout=0)
+    eng.set_param(model_ref_block_name_swc, 'ModelName', child_name, nargout=0)
+    
+    # Position the Model Reference block
+    block_position_x_swc = 100 + (i * 200)
+    eng.set_param(model_ref_block_name_swc, 'Position', f"[{block_position_x_swc}, 100, {block_position_x_swc + 50}, 130]", nargout=0)
