@@ -141,7 +141,7 @@ def launch_gui():
     tk.Label(root, text="SWC Name:").grid(row=0, column=0, padx=10, pady=5)
     entry_swc_name = tk.Entry(root)
     entry_swc_name.grid(row=0, column=1, padx=10, pady=5)
-    entry_swc_name.insert(0, "DefaultSWC")  # Default SWC name
+    entry_swc_name.insert(0, "SWC_LLC_Lat")  # Default SWC name
 
     # Directory Input
     tk.Label(root, text="Directory:").grid(row=1, column=0, padx=10, pady=5)
