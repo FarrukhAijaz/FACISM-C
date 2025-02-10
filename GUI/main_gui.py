@@ -8,7 +8,15 @@ from GUI.confirmation import ConfirmationPage
 class AppController:
     def __init__(self, root):
         self.root = root
-        self.root.title("SWC Generator")
+        self.root.title("SMF-F1")
+        
+        # Lock window size to 800x600
+        self.root.geometry("800x600")
+        self.root.resizable(False, False)  # Disable resizing
+        
+        # Set window icon (use PNG file with iconphoto)
+        self.root.iconphoto(False, tk.PhotoImage(file='/home/saijaz/Desktop/GAMA/GAMA/assets/icons/ico.png'))  # Replace with your PNG icon path
+
         self.frames = {}
 
         container = tk.Frame(root)
