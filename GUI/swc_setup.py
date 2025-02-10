@@ -24,3 +24,22 @@ class SWCSetupPage(tk.Frame):
         if selected_directory:
             self.entry_directory.delete(0, tk.END)
             self.entry_directory.insert(0, selected_directory)
+
+    # def navigate_next():
+    #         if self.var.get() == 1:
+    #             self.controller.show_frame(SWCSetupPage)
+    #         elif self.var.get() == 2:
+    #             self.controller.show_frame(DynamicInputPage)  # Assuming this is the correct class name
+
+    # # Function to go back to the previous page (e.g., WelcomePage)
+    # def navigate_previous():
+    #     self.controller.show_frame(WelcomePage)  # Replace with the actual previous page class
+
+    # # Start Button (Next)
+    # start_button = tk.Button(self, text="Next", font=("Roboto", 10), command=navigate_next)
+    # start_button.place(x=650, y=550, width=80, height=30)
+
+    # # Previous Button
+    # prev_button = tk.Button(self, text="Previous", font=("Roboto", 10), command=navigate_previous)
+    # prev_button.place(x=550, y=550, width=80, height=30)  # Placed to the left of the Next button
+

@@ -8,7 +8,7 @@ from GUI.confirmation import ConfirmationPage
 class AppController:
     def __init__(self, root):
         self.root = root
-        self.root.title("SMF-F1")
+        self.root.title("SMG-F1")
         
         # Lock window size to 800x600
         self.root.geometry("800x600")
