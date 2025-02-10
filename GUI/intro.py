@@ -82,40 +82,46 @@ class IntroPage(Frame):
             self.canvas.itemconfig(self.inner_circle1, state="normal" if self.var.get() == 1 else "hidden")
             self.canvas.itemconfig(self.inner_circle2, state="normal" if self.var.get() == 2 else "hidden")
 
-            # Show or hide the text boxes based on the selected radio button
             if self.var.get() == 1:
-                show_file_dialogs()
-                self.canvas.itemconfig(self.save_location_label1, state="normal")
-                self.canvas.itemconfig(self.arxml_file_label, state="normal")
-                self.canvas.itemconfig(self.save_location_label2, state="hidden")
+                print("I'm here")
+                DisplayRadioButton1();
+
             elif self.var.get() == 2:
-                self.canvas.itemconfig(self.save_location_label1, state="normal")
-                self.canvas.itemconfig(self.arxml_file_label, state="hidden")
-                self.canvas.itemconfig(self.save_location_label2, state="normal")
+                print("I'm there")
+                DisplayRadioButton2();
 
-        # Labels and file dialogs
-        self.file_dialog_label1 = self.canvas.create_text(400, 250, text="Select File 1", font=("Arial", 10), fill="blue", state="hidden")
-        self.file_dialog_label2 = self.canvas.create_text(400, 280, text="Select File 2", font=("Arial", 10), fill="blue", state="hidden")
 
-        self.file1_path = None
-        self.file2_path = None
+        def DisplayRadioButton1():
+            # Labels for text boxes
+            print("I'm now here")
+            label_font = ("Times New Roman", 12, "bold")
+            canvas_id1 = self.canvas.create_text(200, 270, text="Select Save Location:", font=label_font, fill="#17202A")
+            canvas_id2 = self.canvas.create_text(200, 340, text="Select ARXML File:", font=label_font, fill="#17202A")
 
-        def show_file_dialogs():
-            self.canvas.itemconfig(self.file_dialog_label1, state="normal")
-            self.canvas.itemconfig(self.file_dialog_label2, state="normal")
+            # Rectangular boxes
+            rect1 = create_rounded_rectangle(self.canvas, 350, 255, 600, 285, radius=5, fill="white", outline="black")
+            rect2 = create_rounded_rectangle(self.canvas, 350, 325, 600, 355, radius=5, fill="white", outline="black")
 
-            self.file1_path = filedialog.askopenfilename(title="Select File 1")
-            self.file2_path = filedialog.askopenfilename(title="Select File 2")
+            # Text inside boxes
+            text1_id = self.canvas.create_text(475, 270, text="Click to select folder", font=("Arial", 10), fill="grey")
+            text2_id = self.canvas.create_text(475, 340, text="Click to select ARXML file", font=("Arial", 10), fill="grey")
 
-            if self.file1_path and self.file2_path:
-                print(f"File 1 selected: {self.file1_path}")
-                print(f"File 2 selected: {self.file2_path}")
+            # Function to open directory dialog and update text
+            def select_directory(event, text_id):
+                folder_selected = filedialog.askdirectory(title="Select Folder")
+                if folder_selected:
+                    self.canvas.itemconfig(text_id, text=folder_selected, fill="black")
 
-        def hide_file_dialogs():
-            self.canvas.itemconfig(self.file_dialog_label1, state="hidden")
-            self.canvas.itemconfig(self.file_dialog_label2, state="hidden")
-            self.file1_path = None
-            self.file2_path = None
+            # Bind clicks to open dialogs
+            self.canvas.tag_bind(rect1, "<Button-1>", lambda event: select_directory(event, text1_id))
+            self.canvas.tag_bind(text1_id, "<Button-1>", lambda event: select_directory(event, text1_id))
+
+            self.canvas.tag_bind(rect2, "<Button-1>", lambda event: select_directory(event, text2_id))
+            self.canvas.tag_bind(text2_id, "<Button-1>", lambda event: select_directory(event, text2_id))
+
+
+        def DisplayRadioButton2():
+            return 1
 
         # Navigation functionality
         def navigate_next(event=None):
@@ -123,11 +129,8 @@ class IntroPage(Frame):
                 if self.var.get() == 0:
                     raise ValueError("Please select an option before proceeding.")
                 
-                if self.var.get() == 1 and (not self.file1_path or not self.file2_path):
-                    raise ValueError("Please select both files before proceeding.")
-                
                 if self.var.get() == 1:
-                    self.controller.show_frame(SWCSetupPage, self.file1_path, self.file2_path)
+                    self.controller.show_frame(SWCSetupPage)
                 elif self.var.get() == 2:
                     self.controller.show_frame(DynamicInputPage)
 
