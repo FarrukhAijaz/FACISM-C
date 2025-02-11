@@ -3,7 +3,6 @@ from tkinter import Canvas, Entry, OptionMenu, StringVar, messagebox
 from PIL import Image, ImageTk
 from GUI.helper import blur_image
 from GUI.helper import create_rounded_rectangle
-from GUI.dynamic_input import DynamicInputPage
 
 class SWCSetupPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -205,7 +204,7 @@ class SWCSetupPage(tk.Frame):
                     raise ValueError("Please select both Yes/No options before proceeding.")
                 
                 # Proceed to the respective page
-                self.controller.show_frame(DynamicInputPage)
+                self.controller.show_frame("DynamicInputPage")
 
             except ValueError as e:
                 messagebox.showerror("Input Error", str(e))  # Show error pop-up
@@ -219,7 +218,7 @@ class SWCSetupPage(tk.Frame):
 
         # Next button definition
         def NextButton():
-            self.start_button = create_rounded_rectangle(self.canvas, 300, 550, 380, 580, radius=15, fill="#F0B27A", outline="", width=2)
+            self.start_button = create_rounded_rectangle(self.canvas, 300, 550, 380, 580, radius=10, fill="#F0B27A", outline="", width=2)
             self.start_button_text = self.canvas.create_text(335, 565, text="Next", font=("Times New Roman", 14, "bold italic"), fill="#17202A")
 
             self.canvas.tag_bind(self.start_button, "<Button-1>", navigate_next)
@@ -228,6 +227,28 @@ class SWCSetupPage(tk.Frame):
             self.canvas.tag_bind(self.start_button_text, "<Enter>", on_hover)
             self.canvas.tag_bind(self.start_button, "<Leave>", on_leave)
             self.canvas.tag_bind(self.start_button_text, "<Leave>", on_leave)
+        
+        def navigate_previous(event=None):
+            self.controller.show_frame("IntroPage")
+
+        # Hover effects for the 'Previous' button
+        def on_hover_prev(event):
+            self.canvas.itemconfig(self.prev_button, fill="#3498D8")
+
+        def on_leav_prev(event):
+            self.canvas.itemconfig(self.prev_button, fill="#AF7AC5")
+
+        # Next button definition
+        def PrevButton():
+            self.prev_button = create_rounded_rectangle(self.canvas, 10, 550, 100, 580, radius=10, fill="#AF7AC5", outline="", width=2)
+            self.prev_button_text = self.canvas.create_text(50, 565, text="Previous", font=("Times New Roman", 14, "bold italic"), fill="#17202A")
+
+            self.canvas.tag_bind(self.prev_button, "<Button-1>", navigate_previous)
+            self.canvas.tag_bind(self.prev_button_text, "<Button-1>", navigate_previous)
+            self.canvas.tag_bind(self.prev_button, "<Enter>", on_hover_prev)
+            self.canvas.tag_bind(self.prev_button_text, "<Enter>", on_hover_prev)
+            self.canvas.tag_bind(self.prev_button, "<Leave>", on_leav_prev)
+            self.canvas.tag_bind(self.prev_button_text, "<Leave>", on_leav_prev)
         # Execute the functions
 
         InitaliseFrame()
@@ -239,6 +260,7 @@ class SWCSetupPage(tk.Frame):
         Question1()
         Question2()
         NextButton()
+        PrevButton()
 
     def toggle_subcomponent_dropdown(self, value):
             

@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import Frame, Canvas, filedialog, messagebox
 from PIL import Image, ImageTk
-from GUI.swc_setup import SWCSetupPage
-from GUI.dynamic_input import DynamicInputPage
 from GUI.helper import blur_image
 from GUI.helper import create_rounded_rectangle
 
@@ -50,9 +48,9 @@ class IntroPage(Frame):
             label_font = ("Times New Roman", 12, "bold")
             self.canvas.create_text(190, 167, text=label_text, font=label_font, fill="#17202A")
 
-            label_text = "using an ARXML import."
+            label_text = "using a XML import."
             label_font = ("Times New Roman", 12, "bold")
-            self.canvas.create_text(133, 187, text=label_text, font=label_font, fill="#17202A")
+            self.canvas.create_text(118, 187, text=label_text, font=label_font, fill="#17202A")
 
             self.circle1 = self.canvas.create_oval(20, 160, 35, 175, fill="#CCD1D1", outline="#0036FF", width=2)
             self.canvas.tag_bind(self.circle1, "<Button-1>", lambda event: toggle_radio_button(1))
@@ -176,9 +174,9 @@ class IntroPage(Frame):
 
                 # Proceed to the respective page
                 if selected_option == 1:
-                    self.controller.show_frame(SWCSetupPage)
+                    self.controller.show_frame("DynamicInputPage")
                 elif selected_option == 2:
-                    self.controller.show_frame(DynamicInputPage)
+                    self.controller.show_frame("SWCSetupPage")
 
             except ValueError as e:
                 messagebox.showerror("Input Error", str(e))  # Show error pop-up
