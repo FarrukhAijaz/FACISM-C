@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import Frame, Canvas, filedialog
+from tkinter import Frame, Canvas, filedialog, messagebox
 from PIL import Image, ImageTk
 from GUI.swc_setup import SWCSetupPage
 from GUI.swc_setup import DynamicInputPage
@@ -12,69 +12,72 @@ class IntroPage(Frame):
         super().__init__(parent)
         self.controller = controller
         self.configure(width=800, height=600)
+        def InitaliseFrame():
+            self.bg_image = Image.open("/home/saijaz/Desktop/GAMA/GAMA/assets/images/bg.png")
+            self.bg_image = self.bg_image.resize((800, 600), Image.ANTIALIAS)
+            self.bg_photo = ImageTk.PhotoImage(blur_image(self.bg_image, 1))
 
-        self.bg_image = Image.open("/home/saijaz/Desktop/GAMA/GAMA/assets/images/bg.png")
-        self.bg_image = self.bg_image.resize((800, 600), Image.ANTIALIAS)
-        self.bg_photo = ImageTk.PhotoImage(blur_image(self.bg_image, 1))
+            self.canvas = Canvas(self, width=800, height=600, bg="white", bd=0, highlightthickness=0)
+            self.canvas.place(x=0, y=0)
 
-        self.canvas = Canvas(self, width=800, height=600, bg="white", bd=0, highlightthickness=0)
-        self.canvas.place(x=0, y=0)
+            self.canvas.create_image(400, 0, image=self.bg_photo, anchor="nw")
 
-        self.canvas.create_image(400, 0, image=self.bg_photo, anchor="nw")
+            label_text = "Welcome to SMG-F1"
+            label_font = ("Times New Roman", 14, "bold italic")
+            self.canvas.create_text(90, 20, text=label_text, font=label_font, fill="#000FFF", anchor="center")
+            
+            label_text = "(Simulink Model Generator - Ford v1.0)"
+            label_font = ("Times New Roman", 14, "bold italic")
+            self.canvas.create_text(160, 40, text=label_text, font=label_font, fill="#000FFF", anchor="center")
 
-        label_text = "Welcome to SMG-F1"
-        label_font = ("Times New Roman", 14, "bold italic")
-        self.canvas.create_text(90, 20, text=label_text, font=label_font, fill="#000FFF", anchor="center")
-        
-        label_text = "(Simulink Model Generator - Ford v1.0)"
-        label_font = ("Times New Roman", 14, "bold italic")
-        self.canvas.create_text(160, 40, text=label_text, font=label_font, fill="#000FFF", anchor="center")
+            label_text = "This application is an automation tool for creating Simulink Models"
+            label_font = ("Times New Roman", 10, "italic")
+            self.canvas.create_text(200, 60, text=label_text, font=label_font, fill="#0036FF")
 
-        label_text = "This application is an automation tool for creating Simulink Models"
-        label_font = ("Times New Roman", 10, "italic")
-        self.canvas.create_text(200, 60, text=label_text, font=label_font, fill="#0036FF")
+            label_text = "for Software Components, feel free to use it and share any comments!"
+            label_font = ("Times New Roman", 10, "italic")
+            self.canvas.create_text(200, 75, text=label_text, font=label_font, fill="#0036FF")
 
-        label_text = "for Software Components, feel free to use it and share any comments!"
-        label_font = ("Times New Roman", 10, "italic")
-        self.canvas.create_text(200, 75, text=label_text, font=label_font, fill="#0036FF")
-
-        label_text = "Please Select one of the following:"
-        label_font = ("Times New Roman", 12, "bold italic")
-        self.canvas.create_text(125, 125, text=label_text, font=label_font, fill="#17202A")
+            label_text = "Please Select one of the following:"
+            label_font = ("Times New Roman", 12, "bold italic")
+            self.canvas.create_text(125, 125, text=label_text, font=label_font, fill="#17202A")
 
         self.var = tk.IntVar(value=0)
         
         # Button 1 Starts
-        label_text = "Generate Software Component in Simulink"
-        label_font = ("Times New Roman", 12, "bold")
-        self.canvas.create_text(190, 167, text=label_text, font=label_font, fill="#17202A")
+        def InitialiseRadioButton1():
+            label_text = "Generate Software Component in Simulink"
+            label_font = ("Times New Roman", 12, "bold")
+            self.canvas.create_text(190, 167, text=label_text, font=label_font, fill="#17202A")
 
-        label_text = "using an ARXML import."
-        label_font = ("Times New Roman", 12, "bold")
-        self.canvas.create_text(133, 187, text=label_text, font=label_font, fill="#17202A")
+            label_text = "using an ARXML import."
+            label_font = ("Times New Roman", 12, "bold")
+            self.canvas.create_text(133, 187, text=label_text, font=label_font, fill="#17202A")
 
-        self.circle1 = self.canvas.create_oval(20, 160, 35, 175, fill="#CCD1D1", outline="#0036FF", width=2)
-        self.canvas.tag_bind(self.circle1, "<Button-1>", lambda event: toggle_radio_button(1))
+            self.circle1 = self.canvas.create_oval(20, 160, 35, 175, fill="#CCD1D1", outline="#0036FF", width=2)
+            self.canvas.tag_bind(self.circle1, "<Button-1>", lambda event: toggle_radio_button(1))
 
-        self.inner_circle1 = self.canvas.create_oval(23, 163, 32, 172, fill="#28B463", outline="", state="hidden")
+            self.inner_circle1 = self.canvas.create_oval(23, 163, 32, 172, fill="#28B463", outline="", state="hidden")
 
-        self.canvas.create_oval(23, 163, 32, 172, fill="green", outline="", state="hidden", tags="inner1")
+            self.canvas.create_oval(23, 163, 32, 172, fill="green", outline="", state="hidden", tags="inner1")
 
         # Button 2 Starts
-        label_text = "Generate Software Component in Simulink by"
-        label_font = ("Times New Roman", 12, "bold")
-        self.canvas.create_text(200, 227, text=label_text, font=label_font, fill="#17202A")
+        def InitialiseRadioButton2():
+            label_text = "Generate Software Component in Simulink by"
+            label_font = ("Times New Roman", 12, "bold")
+            self.canvas.create_text(200, 227, text=label_text, font=label_font, fill="#17202A")
 
-        label_text = "manually defining software components/units."
-        label_font = ("Times New Roman", 12, "bold")
-        self.canvas.create_text(200, 247, text=label_text, font=label_font, fill="#17202A")
+            label_text = "manually defining software components/units."
+            label_font = ("Times New Roman", 12, "bold")
+            self.canvas.create_text(200, 247, text=label_text, font=label_font, fill="#17202A")
 
-        self.circle2 = self.canvas.create_oval(20, 220, 35, 235, fill="#CCD1D1", outline="#0036FF", width=2)
-        self.canvas.tag_bind(self.circle2, "<Button-1>", lambda event: toggle_radio_button(2))
+            self.circle2 = self.canvas.create_oval(20, 220, 35, 235, fill="#CCD1D1", outline="#0036FF", width=2)
+            self.canvas.tag_bind(self.circle2, "<Button-1>", lambda event: toggle_radio_button(2))
 
-        self.inner_circle2 = self.canvas.create_oval(23, 223, 32, 232, fill="#28B463", outline="", state="hidden")
+            self.inner_circle2 = self.canvas.create_oval(23, 223, 32, 232, fill="#28B463", outline="", state="hidden")
 
-        self.canvas.create_oval(23, 223, 32, 232, fill="green", outline="", state="hidden", tags="inner2")
+            self.canvas.create_oval(23, 223, 32, 232, fill="green", outline="", state="hidden", tags="inner2")
+        
 
         def toggle_radio_button(selected_value):
             self.var.set(selected_value)
@@ -82,66 +85,103 @@ class IntroPage(Frame):
             self.canvas.itemconfig(self.inner_circle1, state="normal" if self.var.get() == 1 else "hidden")
             self.canvas.itemconfig(self.inner_circle2, state="normal" if self.var.get() == 2 else "hidden")
 
-            # Show or hide the text boxes based on the selected radio button
+            # Clear previous UI elements before rendering new ones
+            clear_previous_widgets()
+
             if self.var.get() == 1:
-                show_file_dialogs()
-                self.canvas.itemconfig(self.save_location_label1, state="normal")
-                self.canvas.itemconfig(self.arxml_file_label, state="normal")
-                self.canvas.itemconfig(self.save_location_label2, state="hidden")
+                DisplayRadioButton1()
+
             elif self.var.get() == 2:
-                self.canvas.itemconfig(self.save_location_label1, state="normal")
-                self.canvas.itemconfig(self.arxml_file_label, state="hidden")
-                self.canvas.itemconfig(self.save_location_label2, state="normal")
+                DisplayRadioButton2()
 
-        # Labels and file dialogs
-        self.file_dialog_label1 = self.canvas.create_text(400, 250, text="Select File 1", font=("Arial", 10), fill="blue", state="hidden")
-        self.file_dialog_label2 = self.canvas.create_text(400, 280, text="Select File 2", font=("Arial", 10), fill="blue", state="hidden")
 
-        self.file1_path = None
-        self.file2_path = None
+        # Function to clear previous UI elements
+        def clear_previous_widgets():
+            for widget in self.current_widgets:
+                self.canvas.delete(widget)  # Remove previous elements
+            self.current_widgets.clear()  # Reset list
 
-        def show_file_dialogs():
-            self.canvas.itemconfig(self.file_dialog_label1, state="normal")
-            self.canvas.itemconfig(self.file_dialog_label2, state="normal")
 
-            self.file1_path = filedialog.askopenfilename(title="Select File 1")
-            self.file2_path = filedialog.askopenfilename(title="Select File 2")
+        # Function to open directory dialog and update text
+        def select_directory(text_id):
+            folder_selected = filedialog.askdirectory(title="Select Folder")
+            if folder_selected:
+                self.canvas.itemconfig(text_id, text=folder_selected, fill="black")
 
-            if self.file1_path and self.file2_path:
-                print(f"File 1 selected: {self.file1_path}")
-                print(f"File 2 selected: {self.file2_path}")
 
-        def hide_file_dialogs():
-            self.canvas.itemconfig(self.file_dialog_label1, state="hidden")
-            self.canvas.itemconfig(self.file_dialog_label2, state="hidden")
-            self.file1_path = None
-            self.file2_path = None
+        def DisplayRadioButton1():
+            # Labels for text boxes
+            label_font = ("Times New Roman", 12, "bold")
+            label1 = self.canvas.create_text(80, 300, text="Save Location:", font=label_font, fill="#17202A")
+            label2 = self.canvas.create_text(80, 400, text="ARXML File:", font=label_font, fill="#17202A")
 
-        # Navigation functionality
+            # Rectangular boxes
+            rect1 = create_rounded_rectangle(self.canvas, 90, 325, 360, 355, radius=5, fill="white", outline="black")
+            rect2 = create_rounded_rectangle(self.canvas, 90, 425, 360, 455, radius=5, fill="white", outline="black")
+
+            # Text inside boxes
+            self.text1_id = self.canvas.create_text(225, 340, text="Click to select directory for Simulink Model", font=("Arial", 10), fill="grey")
+            self.text2_id = self.canvas.create_text(220, 440, text="Click to select ARXML file for Import", font=("Arial", 10), fill="grey")
+
+            # Bind clicks to open dialogs
+            self.canvas.tag_bind(rect1, "<Button-1>", lambda event: select_directory(self.text1_id))
+            self.canvas.tag_bind(self.text1_id, "<Button-1>", lambda event: select_directory(self.text1_id))
+
+            self.canvas.tag_bind(rect2, "<Button-1>", lambda event: select_directory(self.text2_id))
+            self.canvas.tag_bind(self.text2_id, "<Button-1>", lambda event: select_directory(self.text2_id))
+
+            # Store UI elements for removal later
+            self.current_widgets.extend([label1, label2, rect1, rect2, self.text1_id, self.text2_id])
+
+
+        def DisplayRadioButton2():
+            # Labels for text boxes
+            label_font = ("Times New Roman", 12, "bold")
+            label1 = self.canvas.create_text(80, 300, text="Save Location:", font=label_font, fill="#17202A")
+
+            # Rectangular box
+            rect1 = create_rounded_rectangle(self.canvas, 90, 325, 360, 355, radius=5, fill="white", outline="black")
+
+            # Text inside box
+            self.text1_id = self.canvas.create_text(225, 340, text="Click to select directory for Simulink Model", font=("Arial", 10), fill="grey")
+
+            # Bind clicks to open dialogs
+            self.canvas.tag_bind(rect1, "<Button-1>", lambda event: select_directory(self.text1_id))
+            self.canvas.tag_bind(self.text1_id, "<Button-1>", lambda event: select_directory(self.text1_id))
+
+            # Store UI elements for removal later
+            self.current_widgets.extend([label1, rect1, self.text1_id])
+
         def navigate_next(event=None):
             try:
-                if self.var.get() == 0:
+                selected_option = self.var.get()
+
+                if selected_option not in [1, 2]:
                     raise ValueError("Please select an option before proceeding.")
-                
-                if self.var.get() == 1 and (not self.file1_path or not self.file2_path):
-                    raise ValueError("Please select both files before proceeding.")
-                
-                if self.var.get() == 1:
-                    self.controller.show_frame(SWCSetupPage, self.file1_path, self.file2_path)
-                elif self.var.get() == 2:
+
+                # Get the actual text inside the text boxes
+                save_location_text = self.canvas.itemcget(self.text1_id, "text")
+                arxml_file_text = self.canvas.itemcget(self.text2_id, "text") if selected_option == 1 else None
+
+                # Default placeholders (greyed-out text when unselected)
+                default_save_text = "Click to select directory for Simulink Model"
+                default_arxml_text = "Click to select ARXML file for Import"
+
+                # Check if the required fields are filled
+                if save_location_text == default_save_text or not save_location_text.strip():
+                    raise ValueError("Please select a Save Location.")
+
+                if selected_option == 1 and (arxml_file_text == default_arxml_text or not arxml_file_text.strip()):
+                    raise ValueError("Please select an ARXML File.")
+
+                # Proceed to the respective page
+                if selected_option == 1:
+                    self.controller.show_frame(SWCSetupPage)
+                elif selected_option == 2:
                     self.controller.show_frame(DynamicInputPage)
 
             except ValueError as e:
-                error_message = str(e)
-                
-                if hasattr(self, 'error_text_id'):
-                    self.canvas.delete(self.error_text_id)
-                
-                self.error_text_id = self.canvas.create_text(400, 550, text=error_message, font=("Arial", 12, "bold"), fill="red", anchor="center")
-            
-            if self.var.get() != 0:
-                if hasattr(self, 'error_text_id'):
-                    self.canvas.delete(self.error_text_id)
+                messagebox.showerror("Input Error", str(e))  # Show error pop-up
 
         # Hover effects for the 'Next' button
         def on_hover(event):
@@ -150,13 +190,21 @@ class IntroPage(Frame):
         def on_leave(event):
             self.canvas.itemconfig(self.start_button, fill="#F0B27A")
 
-        # Next button
-        self.start_button = create_rounded_rectangle(self.canvas, 300, 550, 380, 580, radius=15, fill="#F0B27A", outline="", width=2)
-        self.start_button_text = self.canvas.create_text(335, 565, text="Next", font=("Times New Roman", 14, "bold italic"), fill="#17202A")
+        # Next button definition
+        def NextButton():
+            self.start_button = create_rounded_rectangle(self.canvas, 300, 550, 380, 580, radius=15, fill="#F0B27A", outline="", width=2)
+            self.start_button_text = self.canvas.create_text(335, 565, text="Next", font=("Times New Roman", 14, "bold italic"), fill="#17202A")
 
-        self.canvas.tag_bind(self.start_button, "<Button-1>", navigate_next)
-        self.canvas.tag_bind(self.start_button_text, "<Button-1>", navigate_next)
-        self.canvas.tag_bind(self.start_button, "<Enter>", on_hover)
-        self.canvas.tag_bind(self.start_button_text, "<Enter>", on_hover)
-        self.canvas.tag_bind(self.start_button, "<Leave>", on_leave)
-        self.canvas.tag_bind(self.start_button_text, "<Leave>", on_leave)
+            self.canvas.tag_bind(self.start_button, "<Button-1>", navigate_next)
+            self.canvas.tag_bind(self.start_button_text, "<Button-1>", navigate_next)
+            self.canvas.tag_bind(self.start_button, "<Enter>", on_hover)
+            self.canvas.tag_bind(self.start_button_text, "<Enter>", on_hover)
+            self.canvas.tag_bind(self.start_button, "<Leave>", on_leave)
+            self.canvas.tag_bind(self.start_button_text, "<Leave>", on_leave)
+
+        # Initialize list to track UI elements
+        self.current_widgets = []
+        InitaliseFrame()
+        InitialiseRadioButton1()
+        InitialiseRadioButton2()
+        NextButton()
