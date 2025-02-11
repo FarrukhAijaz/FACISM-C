@@ -27,7 +27,7 @@ class AppController:
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(IntroPage)
+        self.show_frame(SWCSetupPage)
 
     def show_frame(self, page_class):
         """Switch to the given frame by class reference."""

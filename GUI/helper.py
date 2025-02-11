@@ -18,3 +18,20 @@ def create_rounded_rectangle(canvas, x1, y1, x2, y2, radius=10, **kwargs):
     ]
     return canvas.create_polygon(points, smooth=True, **kwargs)
 
+    # def navigate_next():
+    #         if self.var.get() == 1:
+    #             self.controller.show_frame(SWCSetupPage)
+    #         elif self.var.get() == 2:
+    #             self.controller.show_frame(DynamicInputPage)  # Assuming this is the correct class name
+
+    # # Function to go back to the previous page (e.g., WelcomePage)
+    # def navigate_previous():
+    #     self.controller.show_frame(WelcomePage)  # Replace with the actual previous page class
+
+    # # Start Button (Next)
+    # start_button = tk.Button(self, text="Next", font=("Roboto", 10), command=navigate_next)
+    # start_button.place(x=650, y=550, width=80, height=30)
+
+    # # Previous Button
+    # prev_button = tk.Button(self, text="Previous", font=("Roboto", 10), command=navigate_previous)
+    # prev_button.place(x=550, y=550, width=80, height=30)  # Placed to the left of the Next button

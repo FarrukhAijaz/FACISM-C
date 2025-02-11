@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import Frame, Canvas, filedialog, messagebox
 from PIL import Image, ImageTk
 from GUI.swc_setup import SWCSetupPage
-from GUI.swc_setup import DynamicInputPage
+from GUI.dynamic_input import DynamicInputPage
 from GUI.helper import blur_image
 from GUI.helper import create_rounded_rectangle
 
