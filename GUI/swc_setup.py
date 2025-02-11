@@ -113,50 +113,51 @@ class SWCSetupPage(tk.Frame):
                 print("4")
         
         def create_swc_name_input():
-            label = Label(self, text="Enter SWC Name:", font=("Times New Roman", 12, "bold"), bg="white")
-            label.place(x=50, y=120)
-            self.swc_name_entry = Entry(self, font=("Times New Roman", 12))
-            self.swc_name_entry.place(x=200, y=120, width=200)
+            self.canvas.create_text(100, 120, text="Enter Software Component Name:", font=("Times New Roman", 12, "bold"), fill="#17202A", anchor="w")
+            create_rounded_rectangle(self.canvas, 200, 110, 400, 140, radius=10, fill="white", outline="black")
+
+            self.swc_name_entry = Entry(self, font=("Times New Roman", 12), bd=0, bg="white")
+            self.canvas.create_window(300, 125, window=self.swc_name_entry, width=180, height=20)
+            return self.swc_name_entry
 
         def create_subcomponents_question():
-            label = Label(self, text="Does the SWC have subcomponents?", font=("Times New Roman", 12, "bold"), bg="white")
-            label.place(x=50, y=160)
+            self.canvas.create_text(100, 160, text="Does the SWC have subcomponents?", font=("Times New Roman", 12, "bold"), fill="#17202A", anchor="w")
 
-            self.subcomponent_var = StringVar(value="No")
+            self.subcomponent_var = StringVar(value="Select")
             options = ["No", "Yes"]
-            dropdown = OptionMenu(self, self.subcomponent_var, *options, command=toggle_subcomponent_dropdown)
-            dropdown.place(x=350, y=155, width=80)
+            create_rounded_rectangle(self.canvas, 350, 150, 430, 180, radius=10, fill="white", outline="black")
 
-            self.subcomponent_count_var = StringVar(value="1")
+            self.subcomponent_dropdown = OptionMenu(self, self.subcomponent_var, *options, command=self.toggle_subcomponent_dropdown)
+            self.subcomponent_dropdown.config(bg="white", bd=0, highlightthickness=0)
+            self.canvas.create_window(390, 165, window=self.subcomponent_dropdown, width=70, height=20)
+
+            # Subcomponent Count Dropdown
+            self.subcomponent_count_var = StringVar(value="0")
+            create_rounded_rectangle(self.canvas, 450, 150, 510, 180, radius=10, fill="white", outline="black")
             self.subcomponent_count_dropdown = OptionMenu(self, self.subcomponent_count_var, *[str(i) for i in range(1, 11)])
-            self.subcomponent_count_dropdown.place(x=450, y=155, width=60)
-            self.subcomponent_count_dropdown.place_forget()  # Hide initially
-
+            self.subcomponent_count_dropdown.config(bg="white", bd=0, highlightthickness=0)
+            self.subcomponent_count_dropdown_id = self.canvas.create_window(480, 165, window=self.subcomponent_count_dropdown, width=50, height=20)
+            self.canvas.itemconfigure(self.subcomponent_count_dropdown_id, state="hidden")  # Hide initially
+        
         def create_units_question():
-            label = Label(self, text="Does the SWC have units?", font=("Times New Roman", 12, "bold"), bg="white")
-            label.place(x=50, y=200)
+            self.canvas.create_text(100, 200, text="Does the SWC have units?", font=("Times New Roman", 12, "bold"), fill="#17202A", anchor="w")
 
             self.units_var = StringVar(value="No")
             options = ["No", "Yes"]
-            dropdown = OptionMenu(self, self.units_var, *options, command=toggle_units_dropdown)
-            dropdown.place(x=350, y=195, width=80)
+            create_rounded_rectangle(self.canvas, 350, 190, 430, 220, radius=10, fill="white", outline="black")
 
+            self.units_dropdown = OptionMenu(self, self.units_var, *options, command=self.toggle_units_dropdown)
+            self.units_dropdown.config(bg="white", bd=0, highlightthickness=0)
+            self.canvas.create_window(390, 205, window=self.units_dropdown, width=70, height=20)
+
+            # Units Count Dropdown
             self.units_count_var = StringVar(value="1")
+            create_rounded_rectangle(self.canvas, 450, 190, 510, 220, radius=10, fill="white", outline="black")
             self.units_count_dropdown = OptionMenu(self, self.units_count_var, *[str(i) for i in range(1, 11)])
-            self.units_count_dropdown.place(x=450, y=195, width=60)
-            self.units_count_dropdown.place_forget()  # Hide initially
+            self.units_count_dropdown.config(bg="white", bd=0, highlightthickness=0)
+            self.units_count_dropdown_id = self.canvas.create_window(480, 205, window=self.units_count_dropdown, width=50, height=20)
+            self.canvas.itemconfigure(self.units_count_dropdown_id, state="hidden")  # Hide initially
 
-        def toggle_subcomponent_dropdown(self, value):
-            if value == "Yes":
-                self.subcomponent_count_dropdown.place(x=450, y=155, width=60)  # Show dropdown
-            else:
-                self.subcomponent_count_dropdown.place_forget()  # Hide dropdown
-
-        def toggle_units_dropdown(self, value):
-            if value == "Yes":
-                self.units_count_dropdown.place(x=450, y=195, width=60)  # Show dropdown
-            else:
-                self.units_count_dropdown.place_forget()  # Hide dropdown
 
 
         # Execute the functions
@@ -167,3 +168,15 @@ class SWCSetupPage(tk.Frame):
         create_swc_name_input()
         create_subcomponents_question()
         create_units_question()
+
+    def toggle_subcomponent_dropdown(self, value):
+            if value == "Yes":
+                self.canvas.itemconfigure(self.subcomponent_count_dropdown_id, state="normal")  # Show
+            else:
+                self.canvas.itemconfigure(self.subcomponent_count_dropdown_id, state="hidden")  # Hide
+    
+    def toggle_units_dropdown(self, value):
+        if value == "Yes":
+            self.canvas.itemconfigure(self.units_count_dropdown_id, state="normal")  # Show
+        else:
+            self.canvas.itemconfigure(self.units_count_dropdown_id, state="hidden")  # Hide
